@@ -13,7 +13,7 @@ function! tabbar#tabline()
 
 endfunction
 function! tabbar#tab_label(n)
-  let name = gettabvar(a:n, 'name')
+  let name = gettabvar(a:n, 'tabbar_name')
   if (name == "")
     let buflist = tabpagebuflist(a:n)
     let names = map(buflist, {k, v -> substitute(bufname(v), '.*/', '', '')})
@@ -26,11 +26,11 @@ endfunction
 
 function! tabbar#rename_current_tab(...)
   let to = 0 < a:0 ? a:1 : inputdialog("Rename tab to: ",
-                                      \ gettabvar(tabpagenr(), 'name', ""))
+                                      \ gettabvar(tabpagenr(), 'tabbar_name', ""))
   if (to == "")
-    unlet! t:name
+    unlet! t:tabbar_name
   else
-    let t:name = to
+    let t:tabbar_name = to
   endif
   set showtabline=1
 endfunction
