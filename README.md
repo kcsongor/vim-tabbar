@@ -17,3 +17,8 @@ nnoremap <C-w>, :call tabbar#rename_current_tab()<cr>
 ##  Installation
 
 Install with a plugin manager or copy directly into vim's runtime path.
+
+Add this line to your vimrc:
+```vim
+set tabline=%!tabbar#tabline()
+```
