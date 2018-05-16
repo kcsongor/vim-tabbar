@@ -1,6 +1,7 @@
 function! tabbar#tabline()
   let s = ''
   for i in range(tabpagenr('$'))
+    let s .= '%' . (i+1) . 'T'
     if i + 1 == tabpagenr()
       let s .= '%#TabLineSel#'
     else
@@ -10,13 +11,15 @@ function! tabbar#tabline()
   endfor
   let s .= '%#TabLineFill#%T'
   return s
-
 endfunction
+
 function! tabbar#tab_label(n)
   let name = gettabvar(a:n, 'tabbar_name')
   if (name == "")
     let buflist = tabpagebuflist(a:n)
-    let names = map(buflist, {k, v -> substitute(bufname(v), '.*/', '', '')})
+    let names = map(buflist, {k, v -> getbufvar( v, '&modified' ) ?
+                                    \ substitute(bufname(v), '.*/', '+', '') : 
+                                    \ substitute(bufname(v), '.*/', '', '')})
     let names = filter(names, {k, v -> v != ""})
     return "[" . join(names, ",") . "]"
   else
